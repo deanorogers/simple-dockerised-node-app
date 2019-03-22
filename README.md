@@ -26,7 +26,8 @@ $ curl localhost:8081
 ECS_ENGINE_AUTH_TYPE=docker
 ECS_ENGINE_AUTH_DATE={"https://index.docker.io/v1/":{"username":"my-username","password":"my-password","email":"my-email@yahoo.co.uk"}}
 5. Restart the ecs agent: docker stop ecs-agent.
-6. # docker inspect ecs-agent
+6. docker inspect ecs-agent
+7. TODO Try stopping the EC2 instance to see if the ecs.config file persists
 
 ### Create Cluster, Task, Container and service
 TODO
