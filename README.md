@@ -21,3 +21,12 @@ $ curl localhost:8081
 ### Create EC2 instance
 1. Creating an IAM Security Group for SSH (restricted) and HTTP (open)
 2. Create an IAM Role to give EC2 access to ECS services with the AmazonEC2ContainerServiceforEC2Role policy.
+3. Restrict access to PEM key by removing: chmod go-r my-key.pem
+4. Add Docker hub credentials to the /etc/ecs directory:
+ECS_ENGINE_AUTH_TYPE=docker
+ECS_ENGINE_AUTH_DATE={"https://index.docker.io/v1/":{"username":"my-username","password":"my-password","email":"my-email@yahoo.co.uk"}}
+5. Restart the ecs agent: docker stop ecs-agent.
+6. # docker inspect ecs-agent
+
+### Create Cluster, Task, Container and service
+TODO
