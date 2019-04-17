@@ -6,10 +6,14 @@ const express = require('express');
 const PORT = 8080;
 const HOST = '0.0.0.0';
 
+var count = 1;
+
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello Dean\n');
+  console.log(`Received request to say hello`);
+  res.send(count + '. Hello, Dean\n');
+  count++;
 });
 
 app.listen(PORT, HOST);

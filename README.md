@@ -14,10 +14,11 @@ $ curl localhost:8081
 5. Publish the image, e.g. docker push aws_account_id.dkr.ecr.region.amazonaws.com/my-web-app:latest (latest will appear as the image tag in the my-web-app repo)
 
 ### Publish to Docker Hub
-1. docker login deanorogers / ...
-2. docker build -t <hub-user>/<repo-name>[:<tag>], e.g. docker build -t deanorogers/deanorogers-repo .
+1. docker login -- deanorogers / ...
+2. docker build . -t <hub-user>/<repo-name>[:<tag>], e.g. docker build -t deanorogers/deanorogers-repo .
 3. OR tag an existing image, e.g. docker tag e9ae3c220b23 deanorogers/deanorogers-repo
 4. Where necessary, logout of Docker hub using > git config --global --unset credential.helper
+5. $ docker image push deanorogers/deanorogers-repo
 
 ### Create EC2 instance
 1. Creating an IAM Security Group for SSH (restricted) and HTTP (open)
@@ -44,6 +45,16 @@ aws servicediscovery list-services / aws servicediscovery delete-service --id "s
 4. curl the public IP of the EC2 instance before testing via the LB
 
 ### Auto-scaling container/task instances
-1. Do I need an NLB to support > 1 container/task on the same EC2 instance? yes.
-2. Ensure to create NLB and TG in the same VPC.
+1. Do I need an NLB or ALB to support > 1 container/task on the same EC2 instance? yes.
+2. Ensure to create ALB/NLB and TG in the same VPC.
 3. Ensure Sec Grp of EC2 instance accepts traffic from  NLB using dynamic port allocation.
+
+### Update the image in the Docker Registry
+1. Add a simple log command on the GET method of the Node server.
+2. Alter Jenkins port from 8080 to 9090.
+3. Test using Docker run and tailing the logs. $ docker logs -f <container-id>
+4. Publish to docker Registry.
+5. [TODO] Determine if new image is pulled when service is re-started.
+6. [TODO] Force a refresh with command
+# aws ecs update-service --cluster <cluster name> --service <service name>
+7. Obtain the container ports from Target Group and test (curl) from the participating ec2 instances.
